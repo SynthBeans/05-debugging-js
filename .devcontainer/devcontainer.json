@@ -13,7 +13,8 @@
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
         "editor.detectIndentation": false,
-        "editor.wordWrap": "on"
+        "editor.wordWrap": "on",
+        "editor.stickyScroll.enabled": false
       }
     }
   }
