@@ -27,11 +27,11 @@ function toggleTheme() {
   // Toggle the 'dark' class on the body
   document.body.classList.toggle("dark");
   
-  // Update the button text based on the current theme
+  // Update the button text and icon based on the current theme
   if (document.body.classList.contains("dark")) {
-    themeToggle.innerText = "Switch to Light Mode";
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i> Switch to Light Mode';
   } else {
-    themeToggle.innerText = "Switch to Dark Mode";
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i> Switch to Dark Mode';
   }
 }
 
