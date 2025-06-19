@@ -2,28 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tip Calculator</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+  <title>Jerry Scramble</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button id="themeToggle">
-    <i class="fas fa-moon"></i> Switch to Dark Mode
-  </button>
-  <h1><i class="fas fa-calculator"></i> Tip Calculator</h1>
-  <form class="calculator">
-    <label for="billAmount"><i class="fas fa-dollar-sign"></i> Bill Amount:</label>
-    <input type="text" id="billAmount" placeholder="Enter bill amount">
-    
-    <label for="tipPercentage"><i class="fas fa-percentage"></i> Tip Percentage:</label>
-    <input type="text" id="tipPercentage" placeholder="Enter tip percentage">
-    
-    <button type="submit" id="calculate">Calculate Tip</button>
-    
-    <p id="totalAmount">Total: $0.00</p>
-  </form>
+  <div id="gameArea">
+    <div id="header">
+      <div id="gameTitle">Jerry Scramble</div>
+      <button id="pauseBtn">II</button>
+    </div>
+
+    <div id="level">Level 1</div>
+
+    <div id="hud">
+      <div id="scoreBoard">SCORE: 0</div>
+    </div>
+
+    <div id="lives">❤️❤️❤️</div>
+
+    <div id="pauseMenu">
+      <h2>Game Paused</h2>
+      <button id="resumeBtn">Resume</button>
+      <button id="restartBtn">Restart</button>
+    </div>
+
+    <div id="messageOverlay"></div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

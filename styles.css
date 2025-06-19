@@ -1,146 +1,117 @@
-* {
-  box-sizing: border-box;
-}
-
-/* Style for the body */
 body {
-  font-family: 'Poppins', sans-serif;
   margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f8f9fa;
-  color: #333;
-  transition: background 0.5s ease, color 0.5s ease;
+  background: linear-gradient(to bottom right, #004466, #66ccff);
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  color: white;
+}
+
+#gameArea {
   position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* Style for the heading */
-h1 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Style for the calculator container */
-.calculator {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 350px;
-  transition: background 0.5s ease, color 0.5s ease;
-}
-
-/* Style for the labels */
-label {
-  display: block;
-  margin-top: 20px;
-  color: #495057;
-  font-weight: bold;
-  font-size: 1.1em;
-}
-
-/* Style for the inputs */
-input {
-  width: 100%;
-  padding: 14px;
-  margin-top: 8px;
-  border: 1px solid #ced4da;
-  border-radius: 12px;
-  font-size: 18px;
-  outline: none;
-  transition: box-shadow 0.3s, border-color 0.3s, background 0.5s ease, color 0.5s ease;
-}
-
-input:focus {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  border-color: #007bff;
-}
-
-/* Style for the button */
-button {
-  margin-top: 25px;
-  padding: 14px 28px;
-  font-size: 18px;
+.item {
+  position: absolute;
+  font-size: 2.5rem;
+  user-select: none;
   cursor: pointer;
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  border-radius: 30px;
-  transition: background 0.3s ease, color 0.5s ease;
 }
 
-button:hover {
-  background-color: #0056b3;
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-/* Style for the result paragraph */
-p {
-  margin-top: 25px;
-  font-size: 20px;
-  font-weight: bold;
+#gameTitle {
+  font-size: 1.5rem;
 }
 
-/* Dark mode styles */
-body.dark {
-  background-color: #1e1e1e;
-  color: #ffffff;
+#pauseBtn {
+  background: #ffffff33;
+  color: white;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 5px 15px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-body.dark .calculator {
-  background-color: #333;
-  color: #ffffff;
+#hud {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-size: 1.1rem;
 }
 
-body.dark label {
-  color: #ffffff;
+#pauseMenu, #messageOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  display: none;
+  z-index: 999;
 }
 
-body.dark input {
-  background-color: #444;
-  color: #ffffff;
-  border-color: #555;
+#pauseMenu button, #messageOverlay button {
+  background: #ffffff22;
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-body.dark input:focus {
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-  border-color: #007bff;
-}
-
-body.dark button {
-  background-color: #6c757d;
-}
-
-body.dark button:hover {
-  background-color: #5a6268;
-}
-
-/* Style for the toggle button */
-#themeToggle {
+#lives {
   position: absolute;
   top: 10px;
-  right: 10px;
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  transition: background-color 0.3s, color 0.5s ease;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
 }
 
-#themeToggle:hover {
-  background-color: #0056b3;
+.feedback {
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: bold;
+  animation: fadeUp 0.5s ease-out forwards;
+  pointer-events: none;
 }
 
-/* Style for the theme toggle icon */
-#themeToggle i {
-  margin-right: 8px;
+@keyframes fadeUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-30px); }
+}
+
+@media (max-width: 768px) {
+  #gameTitle {
+    font-size: 1.2rem;
+  }
+
+  #pauseBtn {
+    padding: 4px 10px;
+    font-size: 0.9rem;
+  }
+
+  #hud {
+    font-size: 1rem;
+    gap: 10px;
+  }
 }
