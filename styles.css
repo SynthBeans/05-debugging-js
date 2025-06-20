@@ -1,8 +1,10 @@
 body {
   margin: 0;
   background: linear-gradient(to bottom right, #003366, #77A8BB);
-  font-family: 'Arial Rounded MT Bold', sans-serif;
-  color: #003366; /* dark blue text for contrast */
+  font-family: 'Press Start 2P', Arial, sans-serif;
+  color: #003366;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 #gameArea {
@@ -17,7 +19,10 @@ body {
   font-size: 2.5rem;
   user-select: none;
   cursor: pointer;
-  color: #BF6C46; /* accent color for items */
+  color: #BF6C46;
+  z-index: 5;
+  max-width: 12vw;
+  max-height: 12vw;
 }
 
 #header {
@@ -25,12 +30,12 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background: rgba(255, 249, 225, 0.7); /* light background */
+  background: rgba(255, 249, 225, 0.7);
 }
 
 #gameTitle {
   font-size: 1.5rem;
-  color: #BF6C46; /* accent color for title */
+  color: #BF6C46;
 }
 
 #pauseBtn {
@@ -45,16 +50,20 @@ body {
 
 #hud {
   position: absolute;
-  bottom: 10px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 20px;
-  background: rgba(255, 249, 225, 0.8); /* light background */
+  background: rgba(255, 249, 225, 0.8);
   padding: 10px 20px;
-  border-radius: 15px;
+  border-radius: 15px 15px 0 0;
   font-size: 1.1rem;
   color: #003366;
+  z-index: 10;
+  min-width: 200px;
+  max-width: 90vw;
+  box-sizing: border-box;
 }
 
 #pauseMenu, #messageOverlay {
@@ -90,34 +99,29 @@ body {
   transform: translateX(-50%);
   font-size: 1.2rem;
   color: #BF6C46;
+  z-index: 10;
 }
 
 #iconBoundary {
   position: absolute;
   left: 0;
   right: 0;
-  /* Place the boundary just below the HUD */
-  top: calc(100% - 60px); /* This will be overridden below for correct placement */
+  top: calc(100% - 60px);
   height: 1px;
   pointer-events: none;
-  /* Optional: add a transparent border for debugging, remove if not needed */
-  /* border-top: 1px dashed #FFC907; */
 }
 
-/* Move the boundary to just below the HUD */
 #hud + #lives + #iconBoundary {
-  top: calc(100% - 80px); /* Adjust this value if needed to match HUD's bottom */
+  top: calc(100% - 80px);
 }
 
 #iconTopBoundary {
   position: absolute;
-  top: 400px; /* 400px from the top of the game area */
+  top: 400px;
   left: 0;
   right: 0;
   height: 1px;
   pointer-events: none;
-  /* Optional: add a border for debugging, remove or comment out when done */
-  /* border-top: 1px dashed #FFC907; */
 }
 
 .feedback {
@@ -138,14 +142,31 @@ body {
   #gameTitle {
     font-size: 1.2rem;
   }
-
   #pauseBtn {
     padding: 4px 10px;
     font-size: 0.9rem;
   }
-
   #hud {
-    font-size: 1rem;
+    font-size: 0.9rem;
     gap: 10px;
+    padding: 8px 8px;
+  }
+  .item {
+    font-size: 1.5rem;
+    max-width: 18vw;
+    max-height: 18vw;
+  }
+}
+
+@media (max-width: 480px) {
+  #hud {
+    font-size: 0.7rem;
+    gap: 5px;
+    padding: 5px 2px;
+  }
+  .item {
+    font-size: 1.1rem;
+    max-width: 24vw;
+    max-height: 24vw;
   }
 }

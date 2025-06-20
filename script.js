@@ -14,9 +14,20 @@ let lives = 3;
 let jugsRemaining = 0;
 let isPaused = false;
 
+// This function gives a random position only in the blue area
 function getRandomPosition() {
-  const x = Math.random() * (window.innerWidth - 50);
-  const y = Math.random() * (window.innerHeight - 50);
+  // Get the height of the HUD
+  const hud = document.getElementById('hud');
+  const hudHeight = hud.offsetHeight;
+
+  // Get the width and height of the window for responsiveness
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  // Set the bottom limit so icons don't go into the HUD
+  const maxY = screenHeight - hudHeight - 50; // 50 is icon size
+  const x = Math.random() * (screenWidth - 50);
+  const y = Math.random() * (maxY - 70) + 70; // 70 is header space
   return { x, y };
 }
 
@@ -57,7 +68,7 @@ function createItem(emoji, isJug = false) {
   if (isJug) {
     // Create an image element for the jerrycan
     const img = document.createElement('img');
-    img.src = 'jerrycan.png'; // Make sure this file is in your project folder
+    img.src = 'img/jerrycan.png'; // Use the correct path to your image
     img.alt = 'Jerrycan';
     img.style.width = '40px'; // Set a size for the image
     img.style.height = '40px';
@@ -110,6 +121,7 @@ function createItem(emoji, isJug = false) {
   floatAround(item);
 }
 
+// In floatAround, keep icons above the HUD
 function floatAround(item) {
   let dx = (Math.random() - 0.5) * (level + 1);
   let dy = (Math.random() - 0.5) * (level + 1);
@@ -121,11 +133,21 @@ function floatAround(item) {
     }
 
     let rect = item.getBoundingClientRect();
+    let hud = document.getElementById('hud');
+    let hudHeight = hud.offsetHeight;
+    let screenWidth = window.innerWidth;
+    let screenHeight = window.innerHeight;
     let x = rect.left + dx;
     let y = rect.top + dy;
 
-    if (x < 0 || x > window.innerWidth - 30) dx *= -1;
-    if (y < 0 || y > window.innerHeight - 30) dy *= -1;
+    // Left and right boundaries
+    if (x < 0 || x > screenWidth - 50) dx *= -1;
+
+    // Top boundary (header)
+    if (y < 70) dy *= -1; // 70px for header
+
+    // Bottom boundary (above HUD)
+    if (y > screenHeight - hudHeight - 50) dy *= -1;
 
     item.style.left = `${rect.left + dx}px`;
     item.style.top = `${rect.top + dy}px`;
@@ -151,8 +173,9 @@ function initGame() {
     createItem(trash);
   }
 
+  // Create the jugs using the jerrycan image from the img folder
   for (let i = 0; i < jugsRemaining; i++) {
-    createItem('jerrycan.png', true); // Use the image for jugs
+    createItem('', true); // Pass an empty string for emoji, true for jug
   }
 
   scoreBoard.textContent = `SCORE: ${score}`;
