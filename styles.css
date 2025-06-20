@@ -1,8 +1,8 @@
 body {
   margin: 0;
-  background: linear-gradient(to bottom right, #004466, #66ccff);
+  background: linear-gradient(to bottom right, #003366, #77A8BB);
   font-family: 'Arial Rounded MT Bold', sans-serif;
-  color: white;
+  color: #003366; /* dark blue text for contrast */
 }
 
 #gameArea {
@@ -17,6 +17,7 @@ body {
   font-size: 2.5rem;
   user-select: none;
   cursor: pointer;
+  color: #BF6C46; /* accent color for items */
 }
 
 #header {
@@ -24,17 +25,18 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 249, 225, 0.7); /* light background */
 }
 
 #gameTitle {
   font-size: 1.5rem;
+  color: #BF6C46; /* accent color for title */
 }
 
 #pauseBtn {
-  background: #ffffff33;
-  color: white;
-  border: 2px solid white;
+  background: #FFC907;
+  color: #003366;
+  border: 2px solid #003366;
   border-radius: 10px;
   padding: 5px 15px;
   font-size: 1rem;
@@ -48,10 +50,11 @@ body {
   transform: translateX(-50%);
   display: flex;
   gap: 20px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 249, 225, 0.8); /* light background */
   padding: 10px 20px;
   border-radius: 15px;
   font-size: 1.1rem;
+  color: #003366;
 }
 
 #pauseMenu, #messageOverlay {
@@ -59,19 +62,20 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+  background: #FFF7e1;
+  color: #003366;
   padding: 30px;
   border-radius: 15px;
   text-align: center;
   display: none;
   z-index: 999;
+  border: 2px solid #FFC907;
 }
 
 #pauseMenu button, #messageOverlay button {
-  background: #ffffff22;
-  color: white;
-  border: 1px solid white;
+  background: #FFC907;
+  color: #003366;
+  border: 1px solid #BF6C46;
   border-radius: 10px;
   padding: 10px 20px;
   margin: 10px;
@@ -85,6 +89,35 @@ body {
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.2rem;
+  color: #BF6C46;
+}
+
+#iconBoundary {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Place the boundary just below the HUD */
+  top: calc(100% - 60px); /* This will be overridden below for correct placement */
+  height: 1px;
+  pointer-events: none;
+  /* Optional: add a transparent border for debugging, remove if not needed */
+  /* border-top: 1px dashed #FFC907; */
+}
+
+/* Move the boundary to just below the HUD */
+#hud + #lives + #iconBoundary {
+  top: calc(100% - 80px); /* Adjust this value if needed to match HUD's bottom */
+}
+
+#iconTopBoundary {
+  position: absolute;
+  top: 400px; /* 400px from the top of the game area */
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+  /* Optional: add a border for debugging, remove or comment out when done */
+  /* border-top: 1px dashed #FFC907; */
 }
 
 .feedback {
@@ -93,6 +126,7 @@ body {
   font-weight: bold;
   animation: fadeUp 0.5s ease-out forwards;
   pointer-events: none;
+  color: #FFC907;
 }
 
 @keyframes fadeUp {

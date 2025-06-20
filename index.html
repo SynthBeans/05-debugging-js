@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Jerry Scramble</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="gameArea">
@@ -19,6 +19,12 @@
     </div>
 
     <div id="lives">❤️❤️❤️</div>
+
+    <!-- Boundary at 400px from the top to limit icon movement -->
+    <div id="iconTopBoundary"></div>
+
+    <!-- Add a boundary div under the HUD for icon movement limit -->
+    <div id="iconBoundary"></div>
 
     <div id="pauseMenu">
       <h2>Game Paused</h2>
