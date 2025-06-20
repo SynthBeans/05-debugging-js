@@ -8,17 +8,21 @@
 </head>
 <body>
   <div id="gameArea">
-    <div id="header">
+    <div id="header" style="display: flex; align-items: center; justify-content: space-between; padding: 15px 20px;">
       <div id="gameTitle">Jerry Scramble</div>
-      <button id="pauseBtn">II</button>
+      <!-- Hearts, charitywater image, and pause button spaced evenly -->
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div id="lives">❤️❤️❤️</div>
+        <!-- charitywater logo with padding on both sides -->
+        <img src="charitywater.png" alt="Charity Water" style="height: 32px; width: auto; vertical-align: middle; padding: 0 200px;">
+        <button id="pauseBtn">II</button>
+      </div>
     </div>
 
     <div id="hud">
       <div id="scoreBoard">SCORE: 0</div>
       <div id="level">Level 1</div>
     </div>
-
-    <div id="lives">❤️❤️❤️</div>
 
     <!-- Boundary at 400px from the top to limit icon movement -->
     <div id="iconTopBoundary"></div>
