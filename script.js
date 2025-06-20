@@ -52,7 +52,20 @@ function hideMessage() {
 function createItem(emoji, isJug = false) {
   const item = document.createElement('div');
   item.classList.add('item');
-  item.textContent = emoji;
+
+  // If this is a jug, use the jerrycan.png image
+  if (isJug) {
+    // Create an image element for the jerrycan
+    const img = document.createElement('img');
+    img.src = 'jerrycan.png'; // Make sure this file is in your project folder
+    img.alt = 'Jerrycan';
+    img.style.width = '40px'; // Set a size for the image
+    img.style.height = '40px';
+    item.appendChild(img);
+  } else {
+    // For trash, use the emoji
+    item.textContent = emoji;
+  }
 
   const pos = getRandomPosition();
   item.style.left = `${pos.x}px`;
@@ -139,7 +152,7 @@ function initGame() {
   }
 
   for (let i = 0; i < jugsRemaining; i++) {
-    createItem('🟡💧', true);
+    createItem('jerrycan.png', true); // Use the image for jugs
   }
 
   scoreBoard.textContent = `SCORE: ${score}`;
