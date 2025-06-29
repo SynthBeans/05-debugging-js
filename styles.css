@@ -1,8 +1,8 @@
 body {
   margin: 0;
+  font-family: 'Lato', sans-serif;
   background: linear-gradient(to bottom right, #003366, #77A8BB);
-  font-family: 'Press Start 2P', Arial, sans-serif;
-  color: #003366;
+  color: #1A1A1A;
   min-height: 100vh;
   min-width: 100vw;
 }
@@ -30,22 +30,30 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background: rgba(255, 249, 225, 0.7);
+  background: rgba(255, 247, 225, 0.9);
+  border-bottom: 2px solid #FFC907;
 }
 
 #gameTitle {
-  font-size: 1.5rem;
-  color: #BF6C46;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.7rem;
+  color: #003366;
 }
 
 #pauseBtn {
   background: #FFC907;
   color: #003366;
-  border: 2px solid #003366;
+  border: none;
   border-radius: 10px;
-  padding: 5px 15px;
+  padding: 8px 16px;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+#pauseBtn:hover {
+  background: #FED8C1;
 }
 
 #hud {
@@ -55,15 +63,17 @@ body {
   transform: translateX(-50%);
   display: flex;
   gap: 20px;
-  background: rgba(255, 249, 225, 0.8);
-  padding: 10px 20px;
-  border-radius: 15px 15px 0 0;
+  background: rgba(255, 247, 225, 0.9);
+  padding: 12px 24px;
+  border-radius: 20px 20px 0 0;
   font-size: 1.1rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   color: #003366;
   z-index: 10;
-  min-width: 200px;
   max-width: 90vw;
   box-sizing: border-box;
+  border-top: 2px solid #FFC907;
 }
 
 #pauseMenu, #messageOverlay {
@@ -71,25 +81,36 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #FFF7e1;
-  color: #003366;
-  padding: 30px;
-  border-radius: 15px;
+  background: #FFF7E1;
+  color: #1A1A1A;
+  padding: 40px;
+  border-radius: 16px;
   text-align: center;
   display: none;
   z-index: 999;
   border: 2px solid #FFC907;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+#pauseMenu h2, #messageOverlay h2 {
+  font-family: 'Montserrat', sans-serif;
+  color: #003366;
 }
 
 #pauseMenu button, #messageOverlay button {
   background: #FFC907;
   color: #003366;
-  border: 1px solid #BF6C46;
+  border: none;
   border-radius: 10px;
-  padding: 10px 20px;
-  margin: 10px;
+  padding: 12px 24px;
+  margin: 12px;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+#pauseMenu button:hover, #messageOverlay button:hover {
+  background: #FED8C1;
 }
 
 #lives {
@@ -97,31 +118,24 @@ body {
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: #BF6C46;
   z-index: 10;
+  font-weight: bold;
 }
 
+#iconBoundary, #iconTopBoundary {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+}
 #iconBoundary {
-  position: absolute;
-  left: 0;
-  right: 0;
   top: calc(100% - 60px);
-  height: 1px;
-  pointer-events: none;
 }
-
-#hud + #lives + #iconBoundary {
-  top: calc(100% - 80px);
-}
-
 #iconTopBoundary {
-  position: absolute;
   top: 400px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  pointer-events: none;
 }
 
 .feedback {
@@ -131,6 +145,7 @@ body {
   animation: fadeUp 0.5s ease-out forwards;
   pointer-events: none;
   color: #FFC907;
+  text-shadow: 1px 1px #1A1A1A;
 }
 
 @keyframes fadeUp {
@@ -138,21 +153,22 @@ body {
   100% { opacity: 0; transform: translateY(-30px); }
 }
 
+/* Responsive tweaks */
 @media (max-width: 768px) {
   #gameTitle {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
   #pauseBtn {
-    padding: 4px 10px;
+    padding: 6px 12px;
     font-size: 0.9rem;
   }
   #hud {
-    font-size: 0.9rem;
-    gap: 10px;
-    padding: 8px 8px;
+    font-size: 0.95rem;
+    gap: 12px;
+    padding: 10px 16px;
   }
   .item {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     max-width: 18vw;
     max-height: 18vw;
   }
@@ -160,13 +176,14 @@ body {
 
 @media (max-width: 480px) {
   #hud {
-    font-size: 0.7rem;
-    gap: 5px;
-    padding: 5px 2px;
+    font-size: 0.75rem;
+    gap: 8px;
+    padding: 8px 10px;
   }
   .item {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     max-width: 24vw;
     max-height: 24vw;
   }
 }
+

@@ -4,7 +4,13 @@
   <meta charset="UTF-8">
   <title>Jerry Scramble</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body, * {
+      font-family: 'Montserrat', sans-serif !important;
+    }
+  </style>
 </head>
 <img id="jerrycan" src="img/jerrycan.png" style="display:none;" alt="Test Jerrycan">
 
@@ -15,12 +21,14 @@
       <!-- Hearts, charitywater image, and pause button spaced evenly -->
       <div style="display: flex; align-items: center; gap: 20px;">
         <div id="lives">❤️❤️❤️</div>
-        <!-- The image is now loaded from the img folder -->
-        <img 
-          src="img/charitywater.png" 
-          alt="Charity Water" 
-          style="height: 32px; width: auto; padding: 0 200px; vertical-align: middle;"
-        >
+        <!-- Make the image clickable by wrapping it in an anchor tag -->
+        <a href="https://www.charitywater.org/" target="_blank">
+          <img 
+            src="img/charitywater.png" 
+            alt="Charity Water" 
+            style="height: 32px; width: auto; padding: 0 200px; vertical-align: middle;"
+          >
+        </a>
         <button id="pauseBtn">II</button>
       </div>
     </div>
@@ -40,6 +48,8 @@
       <h2>Game Paused</h2>
       <button id="resumeBtn">Resume</button>
       <button id="restartBtn">Restart</button>
+      <!-- Add Charity Water button -->
+      <button id="charityWaterBtn">Charity Water</button>
     </div>
 
     <div id="messageOverlay"></div>

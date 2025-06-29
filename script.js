@@ -8,35 +8,21 @@ const resumeBtn = document.getElementById('resumeBtn');
 const restartBtn = document.getElementById('restartBtn');
 const messageOverlay = document.getElementById('messageOverlay');
 
-// Get the jerry can image by its id
-const jerrycan = document.getElementById('jerrycan');
-
-// This variable helps us know if the click was already counted
-let jerrycanClicked = false;
-
-// This will store the timer
-let holdTimer = null;
-
 let score = 0;
 let level = 1;
 let lives = 3;
 let jugsRemaining = 0;
 let isPaused = false;
 
-// This function gives a random position only in the blue area
 function getRandomPosition() {
-  // Get the height of the HUD
   const hud = document.getElementById('hud');
   const hudHeight = hud.offsetHeight;
-
-  // Get the width and height of the window for responsiveness
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
 
-  // Set the bottom limit so icons don't go into the HUD
-  const maxY = screenHeight - hudHeight - 50; // 50 is icon size
+  const maxY = screenHeight - hudHeight - 50;
   const x = Math.random() * (screenWidth - 50);
-  const y = Math.random() * (maxY - 70) + 70; // 70 is header space
+  const y = Math.random() * (maxY - 70) + 70;
   return { x, y };
 }
 
@@ -73,17 +59,16 @@ function createItem(emoji, isJug = false) {
   const item = document.createElement('div');
   item.classList.add('item');
 
-  // If this is a jug, use the jerrycan.png image
   if (isJug) {
-    // Create an image element for the jerrycan
     const img = document.createElement('img');
-    img.src = 'img/jerrycan.png'; // Use the correct path to your image
+    img.src = 'img/jerrycan.png';
     img.alt = 'Jerrycan';
-    img.style.width = '40px'; // Set a size for the image
+    img.style.width = '40px';
     img.style.height = '40px';
+    img.draggable = false; // ✅ prevent dragging
+    img.addEventListener('dragstart', e => e.preventDefault());
     item.appendChild(img);
   } else {
-    // For trash, use the emoji
     item.textContent = emoji;
   }
 
@@ -91,8 +76,9 @@ function createItem(emoji, isJug = false) {
   item.style.left = `${pos.x}px`;
   item.style.top = `${pos.y}px`;
 
-  item.addEventListener('click', (e) => {
+  item.addEventListener('click', () => {
     if (isPaused) return;
+
     const rect = item.getBoundingClientRect();
     const clickX = rect.left + rect.width / 2;
     const clickY = rect.top;
@@ -120,6 +106,7 @@ function createItem(emoji, isJug = false) {
       scoreBoard.textContent = `SCORE: ${score}`;
       updateLives();
       showFeedback('-50 ❌', 'red', clickX, clickY);
+      item.remove();
       if (lives <= 0) {
         showMessage('YOU LOST', true);
       }
@@ -130,7 +117,6 @@ function createItem(emoji, isJug = false) {
   floatAround(item);
 }
 
-// In floatAround, keep icons above the HUD
 function floatAround(item) {
   let dx = (Math.random() - 0.5) * (level + 1);
   let dy = (Math.random() - 0.5) * (level + 1);
@@ -149,13 +135,8 @@ function floatAround(item) {
     let x = rect.left + dx;
     let y = rect.top + dy;
 
-    // Left and right boundaries
     if (x < 0 || x > screenWidth - 50) dx *= -1;
-
-    // Top boundary (header)
-    if (y < 70) dy *= -1; // 70px for header
-
-    // Bottom boundary (above HUD)
+    if (y < 70) dy *= -1;
     if (y > screenHeight - hudHeight - 50) dy *= -1;
 
     item.style.left = `${rect.left + dx}px`;
@@ -175,16 +156,15 @@ function initGame() {
   document.querySelectorAll('.item').forEach(el => el.remove());
   jugsRemaining = 3 + level;
   const trashCount = 10 + level * 5;
-  const trashEmojis = ['🚽️', '🍟', '🥤', '🪣', '🥃', '🍌'];
+  const trashEmojis = ['💩', '🪰', '🧻', '🦠', '🧫', '🪨']; // Water-related "trash"
 
   for (let i = 0; i < trashCount; i++) {
     const trash = trashEmojis[Math.floor(Math.random() * trashEmojis.length)];
     createItem(trash);
   }
 
-  // Create the jugs using the jerrycan image from the img folder
   for (let i = 0; i < jugsRemaining; i++) {
-    createItem('', true); // Pass an empty string for emoji, true for jug
+    createItem('', true); // Add water jugs
   }
 
   scoreBoard.textContent = `SCORE: ${score}`;
@@ -200,50 +180,7 @@ function resetGame() {
   initGame();
 }
 
-// This function gives points to the player
-function handleJerrycanClick() {
-  // Only give points if not already clicked
-  if (!jerrycanClicked) {
-    jerrycanClicked = true;
-    // Add your code here to give points and update the game
-    // Example:
-    // score = score + 100;
-    // scoreBoard.textContent = `SCORE: ${score}`;
-    alert('You clicked the jerry can!');
-  }
-}
-
-// When the mouse button is pressed down on the image
-jerrycan.addEventListener('mousedown', function(event) {
-  // Prevent the image from being dragged
-  event.preventDefault();
-
-  // Reset the clicked flag
-  jerrycanClicked = false;
-
-  // Start a timer for 10 ms
-  holdTimer = setTimeout(function() {
-    handleJerrycanClick();
-  }, 10);
-});
-
-// When the mouse button is released
-jerrycan.addEventListener('mouseup', function(event) {
-  // Prevent the image from being dragged
-  event.preventDefault();
-
-  // If the timer is still running, clear it and count as a click
-  if (holdTimer) {
-    clearTimeout(holdTimer);
-    handleJerrycanClick();
-  }
-});
-
-// Prevent dragging the image
-jerrycan.addEventListener('dragstart', function(event) {
-  event.preventDefault();
-});
-
+// Pause/Resume/Restart
 pauseBtn.addEventListener('click', () => {
   isPaused = true;
   pauseMenu.style.display = 'block';
@@ -261,3 +198,5 @@ restartBtn.addEventListener('click', () => {
 });
 
 resetGame();
+
+
