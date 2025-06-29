@@ -31,6 +31,7 @@ function showFeedback(text, color, x, y) {
   fb.className = 'feedback';
   fb.textContent = text;
   fb.style.color = color;
+  // Set the feedback position using template literals
   fb.style.left = `${x}px`;
   fb.style.top = `${y}px`;
   gameArea.appendChild(fb);
@@ -38,7 +39,7 @@ function showFeedback(text, color, x, y) {
 }
 
 function showMessage(text, showButton = false) {
-  messageOverlay.innerHTML = `<h2>${text}</h2>`;
+  messageOverlay.innerHTML = <h2>${text}</h2>;
   if (showButton) {
     const btn = document.createElement('button');
     btn.textContent = 'Restart';
@@ -73,6 +74,7 @@ function createItem(emoji, isJug = false) {
   }
 
   const pos = getRandomPosition();
+  // Set the item's position using template literals
   item.style.left = `${pos.x}px`;
   item.style.top = `${pos.y}px`;
 
@@ -86,14 +88,17 @@ function createItem(emoji, isJug = false) {
     if (isJug) {
       score += 100;
       jugsRemaining--;
+      // Update the scoreboard with the current score using a template literal
       scoreBoard.textContent = `SCORE: ${score}`;
       showFeedback('+100 ✅', 'lime', clickX, clickY);
       item.remove();
       if (jugsRemaining === 0) {
+        // Show a message when the level is beaten, using a template literal
         showMessage(`CONGRATS ON BEATING LEVEL ${level}`);
         setTimeout(() => {
           hideMessage();
           level++;
+          // Update the level display using a template literal
           levelDisplay.textContent = `Level ${level}`;
           lives = 3;
           updateLives();
@@ -103,6 +108,7 @@ function createItem(emoji, isJug = false) {
     } else {
       score -= 50;
       lives--;
+      // Update the scoreboard with the current score using a template literal
       scoreBoard.textContent = `SCORE: ${score}`;
       updateLives();
       showFeedback('-50 ❌', 'red', clickX, clickY);
@@ -139,6 +145,7 @@ function floatAround(item) {
     if (y < 70) dy *= -1;
     if (y > screenHeight - hudHeight - 50) dy *= -1;
 
+    // Set the new position using template literals
     item.style.left = `${rect.left + dx}px`;
     item.style.top = `${rect.top + dy}px`;
 
@@ -167,6 +174,7 @@ function initGame() {
     createItem('', true); // Add water jugs
   }
 
+  // Update the scoreboard with the current score using a template literal
   scoreBoard.textContent = `SCORE: ${score}`;
   updateLives();
 }
@@ -175,6 +183,7 @@ function resetGame() {
   score = 0;
   level = 1;
   lives = 3;
+  // Update the level display using a template literal
   levelDisplay.textContent = `Level ${level}`;
   updateLives();
   initGame();
@@ -198,5 +207,3 @@ restartBtn.addEventListener('click', () => {
 });
 
 resetGame();
-
-
