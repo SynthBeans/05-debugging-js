@@ -1,3 +1,4 @@
+// Get references to elements
 const gameArea = document.getElementById('gameArea');
 const scoreBoard = document.getElementById('scoreBoard');
 const levelDisplay = document.getElementById('level');
@@ -7,15 +8,6 @@ const pauseMenu = document.getElementById('pauseMenu');
 const resumeBtn = document.getElementById('resumeBtn');
 const restartBtn = document.getElementById('restartBtn');
 const messageOverlay = document.getElementById('messageOverlay');
-
-// Get the jerry can image element
-const jerryCan = document.getElementById('jerryCan'); // Make sure your image has id="jerryCan"
-
-// This variable will help us know if the click was already counted
-let jerryCanClicked = false;
-
-// This will store the timer
-let holdTimer = null;
 
 let score = 0;
 let level = 1;
@@ -70,29 +62,32 @@ function hideMessage() {
 }
 
 function createItem(emoji, isJug = false) {
+  // Create a div for the icon
   const item = document.createElement('div');
   item.classList.add('item');
 
   // If this is a jug, use the jerrycan.png image
   if (isJug) {
-    // Create an image element for the jerrycan
     const img = document.createElement('img');
-    img.src = 'img/jerrycan.png'; // Use the correct path to your image
+    img.src = 'img/jerrycan.png';
     img.alt = 'Jerrycan';
-    img.style.width = '40px'; // Set a size for the image
+    img.style.width = '40px';
     img.style.height = '40px';
     item.appendChild(img);
   } else {
-    // For trash, use the emoji
     item.textContent = emoji;
   }
 
+  // Set random position
   const pos = getRandomPosition();
+  item.style.position = 'absolute';
   item.style.left = `${pos.x}px`;
   item.style.top = `${pos.y}px`;
 
-  item.addEventListener('click', (e) => {
+  // Listen for clicks on the item
+  item.addEventListener('click', function() {
     if (isPaused) return;
+
     const rect = item.getBoundingClientRect();
     const clickX = rect.left + rect.width / 2;
     const clickY = rect.top;
@@ -105,7 +100,7 @@ function createItem(emoji, isJug = false) {
       item.remove();
       if (jugsRemaining === 0) {
         showMessage(`CONGRATS ON BEATING LEVEL ${level}`);
-        setTimeout(() => {
+        setTimeout(function() {
           hideMessage();
           level++;
           levelDisplay.textContent = `Level ${level}`;
@@ -130,7 +125,6 @@ function createItem(emoji, isJug = false) {
   floatAround(item);
 }
 
-// In floatAround, keep icons above the HUD
 function floatAround(item) {
   let dx = (Math.random() - 0.5) * (level + 1);
   let dy = (Math.random() - 0.5) * (level + 1);
@@ -172,19 +166,24 @@ function updateLives() {
 }
 
 function initGame() {
-  document.querySelectorAll('.item').forEach(el => el.remove());
+  // Remove all old icons
+  const oldItems = document.querySelectorAll('.item');
+  for (let i = 0; i < oldItems.length; i++) {
+    oldItems[i].remove();
+  }
+
   jugsRemaining = 3 + level;
   const trashCount = 10 + level * 5;
   const trashEmojis = ['🚽️', '🍟', '🥤', '🪣', '🥃', '🍌'];
 
   for (let i = 0; i < trashCount; i++) {
-    const trash = trashEmojis[Math.floor(Math.random() * trashEmojis.length)];
-    createItem(trash);
+    const randomIndex = Math.floor(Math.random() * trashEmojis.length);
+    const trash = trashEmojis[randomIndex];
+    createItem(trash, false);
   }
 
-  // Create the jugs using the jerrycan image from the img folder
   for (let i = 0; i < jugsRemaining; i++) {
-    createItem('', true); // Pass an empty string for emoji, true for jug
+    createItem('', true);
   }
 
   scoreBoard.textContent = `SCORE: ${score}`;
@@ -200,16 +199,25 @@ function resetGame() {
   initGame();
 }
 
-// Only give points if not already clicked
-function handleJerryCanClick() {
-  if (!jerryCanClicked) {
-    jerryCanClicked = true;
-    // Add your code here to give points and update the game
-    // Example:
-    // score = score + 10;
-    // updateScoreDisplay();
-    // Hide or move the jerry can, etc.
-    // ...
+// Pause and resume logic
+pauseBtn.addEventListener('click', function() {
+  isPaused = true;
+  pauseMenu.style.display = 'block';
+});
+
+resumeBtn.addEventListener('click', function() {
+  isPaused = false;
+  pauseMenu.style.display = 'none';
+});
+
+restartBtn.addEventListener('click', function() {
+  isPaused = false;
+  pauseMenu.style.display = 'none';
+  resetGame();
+});
+
+// Start the game
+resetGame();
   }
 }
 
@@ -224,7 +232,7 @@ jerryCan.addEventListener('mousedown', function(event) {
   // Start a timer for 0.1 second (100 ms)
   holdTimer = setTimeout(function() {
     handleJerryCanClick();
-  }, 100);
+  }, 10);
 });
 
 // When the mouse button is released
