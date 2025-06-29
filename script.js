@@ -8,6 +8,15 @@ const resumeBtn = document.getElementById('resumeBtn');
 const restartBtn = document.getElementById('restartBtn');
 const messageOverlay = document.getElementById('messageOverlay');
 
+// Get the jerry can image element
+const jerryCan = document.getElementById('jerryCan'); // Make sure your image has id="jerryCan"
+
+// This variable will help us know if the click was already counted
+let jerryCanClicked = false;
+
+// This will store the timer
+let holdTimer = null;
+
 let score = 0;
 let level = 1;
 let lives = 3;
@@ -190,6 +199,50 @@ function resetGame() {
   updateLives();
   initGame();
 }
+
+// Only give points if not already clicked
+function handleJerryCanClick() {
+  if (!jerryCanClicked) {
+    jerryCanClicked = true;
+    // Add your code here to give points and update the game
+    // Example:
+    // score = score + 10;
+    // updateScoreDisplay();
+    // Hide or move the jerry can, etc.
+    // ...
+  }
+}
+
+// When the mouse button is pressed down on the image
+jerryCan.addEventListener('mousedown', function(event) {
+  // Prevent the image from being dragged
+  event.preventDefault();
+
+  // Reset the clicked flag
+  jerryCanClicked = false;
+
+  // Start a timer for 0.1 second (100 ms)
+  holdTimer = setTimeout(function() {
+    handleJerryCanClick();
+  }, 100);
+});
+
+// When the mouse button is released
+jerryCan.addEventListener('mouseup', function(event) {
+  // Prevent the image from being dragged
+  event.preventDefault();
+
+  // If the timer is still running, clear it and count as a click
+  if (holdTimer) {
+    clearTimeout(holdTimer);
+    handleJerryCanClick();
+  }
+});
+
+// Prevent dragging the image (for extra safety)
+jerryCan.addEventListener('dragstart', function(event) {
+  event.preventDefault();
+});
 
 pauseBtn.addEventListener('click', () => {
   isPaused = true;
