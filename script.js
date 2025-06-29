@@ -39,7 +39,7 @@ function showFeedback(text, color, x, y) {
 }
 
 function showMessage(text, showButton = false) {
-  messageOverlay.innerHTML = <h2>${text}</h2>;
+  messageOverlay.innerHTML = `<h2>${text}</h2>`; // ← Use backticks here!
   if (showButton) {
     const btn = document.createElement('button');
     btn.textContent = 'Restart';
@@ -51,6 +51,7 @@ function showMessage(text, showButton = false) {
   }
   messageOverlay.style.display = 'block';
 }
+
 
 function hideMessage() {
   messageOverlay.style.display = 'none';
